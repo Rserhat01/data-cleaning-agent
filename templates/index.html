@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Otomatik Veri Temizleme Agentı</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f9fc;
+            color: #3a0ca3;
+            padding: 20px;
+        }
+        h1 {
+            color: #720026;
+        }
+        button {
+            background-color: #00b4d8;
+            border: none;
+            color: white;
+            padding: 10px 18px;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #0077b6;
+        }
+        .result-box {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            height: 250px;
+            overflow-y: auto;
+            color: #480ca8;
+            white-space: pre-wrap;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #a3a3a3;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #720026;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Otomatik Veri Temizleme ve Ön İşleme Agentı</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="csv_file" accept=".csv" required />
+        <br /><br />
+        <button type="submit" name="action" value="suggest">Temizleme Önerisi Al</button>
+        <button type="submit" name="action" value="clean">Temizlemeyi Uygula</button>
+    </form>
+
+    {% if suggestion %}
+    <div class="result-box">{{ suggestion }}</div>
+    {% endif %}
+
+    {% if download_available %}
+    <a href="{{ url_for('download_file') }}" class="btn btn-primary">Temizlenmiş CSV'yi İndir</a>
+    {% endif %}
+
+
+    {% if cleaned %}
+    <h3>Temizlenmiş Veri (İlk 5 Satır)</h3>
+    {{ cleaned | safe }}
+    {% endif %}
+</body>
+</html>
